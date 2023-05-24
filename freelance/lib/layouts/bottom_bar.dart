@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:freelance/home/home_page.dart';
+import 'package:freelance/pages/home/home_page.dart';
+import 'package:freelance/pages/message/message_page.dart';
+import 'package:freelance/pages/my_job/my_job_page.dart';
+import 'package:freelance/pages/profile/profile_page.dart';
 
 class BottomBar extends StatefulWidget {
   const BottomBar({super.key});
@@ -13,9 +16,9 @@ class _BottomBarState extends State<BottomBar> {
 
   static final List<Widget> _widgetOptions = <Widget>[
     HomePage(),
-    const Text("contoh"),
-    const Text("contoh"),
-    const Text("contoh")
+    const MyJobPage(),
+    const MessagePage(),
+    const ProfilePage()
   ];
 
   void _onItemTapped(int index) {
@@ -34,7 +37,7 @@ class _BottomBarState extends State<BottomBar> {
         showSelectedLabels: false,
         showUnselectedLabels: false,
         selectedItemColor: const Color.fromARGB(255, 25, 167, 206),
-        unselectedItemColor: Color.fromARGB(255, 175, 211, 226),
+        unselectedItemColor: const Color.fromARGB(255, 175, 211, 226),
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
         items: const [
