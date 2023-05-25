@@ -3,6 +3,7 @@ import 'package:freelance/pages/home/home_page.dart';
 import 'package:freelance/pages/message/message_page.dart';
 import 'package:freelance/pages/my_job/my_job_page.dart';
 import 'package:freelance/pages/profile/profile_page.dart';
+import 'package:freelance/utils/app_styles.dart';
 
 class BottomBar extends StatefulWidget {
   const BottomBar({super.key});
@@ -30,6 +31,7 @@ class _BottomBarState extends State<BottomBar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: primary2,
       body: _widgetOptions[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
         elevation: 10,
