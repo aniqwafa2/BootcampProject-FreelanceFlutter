@@ -32,13 +32,14 @@ class MyApp extends StatelessWidget {
             return const SplashScreen();
           } else {
             return MaterialApp(
+              debugShowCheckedModeBanner: false,
               title: 'Flutter Demo',
               theme: ThemeData(
                 primaryColor: primary,
               ),
               //home: const BottomBar(),
-              //home: const LoginPage(),
-              home: const RegisterPage(),
+              home: const LoginPage(),
+              //home: const RegisterPage(),
             );
           }
         });

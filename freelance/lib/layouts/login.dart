@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:freelance/layouts/register.dart';
 import 'package:freelance/utils/app_styles.dart';
 import 'package:gap/gap.dart';
 
@@ -57,28 +58,40 @@ class _LoginPageState extends State<LoginPage> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Container(
+                        SizedBox(
                           height: 40,
                           width: 90,
-                          decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(10),
-                              border: Border.all(color: primary)),
-                          child: Center(
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.white,
+                                side: BorderSide(color: primary),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                foregroundColor: primary),
+                            onPressed: () => {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const RegisterPage()),
+                              )
+                            },
                             child: Text(
                               "Register",
                               style: TextStyle(color: primary),
                             ),
                           ),
                         ),
-                        Container(
+                        SizedBox(
                           height: 40,
                           width: 90,
-                          decoration: BoxDecoration(
-                              color: primary,
-                              borderRadius: BorderRadius.circular(10)),
-                          child: const Center(
-                            child: Text(
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10)),
+                                backgroundColor: primary),
+                            onPressed: () => {},
+                            child: const Text(
                               "Login",
                               style: TextStyle(color: Colors.white),
                             ),
