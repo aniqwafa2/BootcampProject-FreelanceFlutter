@@ -75,7 +75,68 @@ class MessagePage extends StatelessWidget {
           ),
           const SizedBox(
             height: 50,
-          )
+          ),
+          Card(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10)),
+              child: Container(
+                padding: const EdgeInsets.fromLTRB(10, 15, 10, 12),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Expanded(
+                      flex: 1,
+                      child: Container(
+                        height: 50,
+                        width: 50,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        child: const CircleAvatar(
+                            backgroundImage:
+                                AssetImage('assets/images/profile.jpg')),
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    Expanded(
+                      flex: 4,
+                      child: Column(
+                        children: [
+                          Row(
+                            children: [
+                              Expanded(
+                                flex: 4,
+                                child: Text(
+                                  "Sender/Recipient Name",
+                                  style: Styles.headLineStyle3,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                              const SizedBox(
+                                width: 20,
+                              ),
+                              Text(
+                                'May, 5 2023',
+                                style: Styles.headLineStyle3,
+                              )
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          const Text(
+                            'text content asdjknaskjdnakj sndkjanskdan a sjkdnaskjd nak jnakdj ndjksandkjas',
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 2,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              )),
         ],
       ),
     ));

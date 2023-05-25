@@ -17,7 +17,7 @@ class MyJobPage extends StatelessWidget {
               Expanded(
                   flex: 1,
                   child: Text(
-                    "MyJob",
+                    "MyJob ${MediaQuery.of(context).size.width}",
                     style: Styles.headLineStyle3,
                   )),
               Container(
@@ -78,60 +78,87 @@ class MyJobPage extends StatelessWidget {
             height: 50,
           ),
           Card(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10)),
               child: Container(
-            padding: const EdgeInsets.all(10),
-            child: Row(
-              children: [
-                Container(
-                  height: 40,
-                  width: 40,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  child: const CircleAvatar(
-                      backgroundImage: AssetImage('assets/images/profile.jpg')),
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                padding: const EdgeInsets.fromLTRB(10, 15, 10, 12),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Row(
-                      children: [
-                        Column(children: [
-                          Text(
-                            "Job title",
-                            style: Styles.headLineStyle3,
-                          ),
-                          const Text('Category')
-                        ]),
-                        Column(
-                          children: [
-                            Text(
-                              "Applied At",
-                              style: Styles.headLineStyle3,
-                            ),
-                            Text(
-                              'Date',
-                              style: Styles.headLineStyle3,
-                            )
-                          ],
-                        )
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.fiber_manual_record,
-                          size: 16,
-                          color: Styles.primaryColor,
+                    Expanded(
+                      flex: 1,
+                      child: Container(
+                        height: 50,
+                        width: 50,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
                         ),
-                        const Text("status")
-                      ],
-                    )
+                        child: const CircleAvatar(
+                            backgroundImage:
+                                AssetImage('assets/images/profile.jpg')),
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    Expanded(
+                      flex: 4,
+                      child: Column(
+                        children: [
+                          Row(
+                            children: [
+                              Expanded(
+                                child: Text(
+                                  "Job title",
+                                  style: Styles.headLineStyle3,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                              const SizedBox(
+                                width: 20,
+                              ),
+                              Text(
+                                'Applied At',
+                                style: Styles.headLineStyle3,
+                              )
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              const Expanded(
+                                child: Text(
+                                  "Category",
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                              const SizedBox(
+                                width: 20,
+                              ),
+                              Text(
+                                'May, 5 2023',
+                                style: Styles.headLineStyle3,
+                              )
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          Row(
+                            children: [
+                              Icon(
+                                Icons.fiber_manual_record,
+                                size: 16,
+                                color: Styles.primaryColor,
+                              ),
+                              const Text("Status")
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
                   ],
-                )
-              ],
-            ),
-          ))
+                ),
+              )),
         ],
       ),
     ));
