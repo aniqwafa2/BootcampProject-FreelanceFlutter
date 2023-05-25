@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:freelance/layouts/bottom_bar.dart';
+import 'package:freelance/layouts/login.dart';
+import 'package:freelance/layouts/register.dart';
 import 'package:freelance/layouts/splash_screen.dart';
 import 'package:freelance/utils/app_styles.dart';
 
@@ -34,7 +36,9 @@ class MyApp extends StatelessWidget {
               theme: ThemeData(
                 primaryColor: primary,
               ),
-              home: const BottomBar(),
+              //home: const BottomBar(),
+              home: const LoginPage(),
+              //home: const RegisterPage(),
             );
           }
         });
