@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
               theme: ThemeData(
                 primaryColor: primary,
               ),
-              // home: const BottomBar(),
+              //home: const BottomBar(),
               home: const LoginPage(),
               // home: const RegisterPage(),
             );

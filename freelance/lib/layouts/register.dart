@@ -19,7 +19,7 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
-  AuthController _authController = AuthController();
+  final AuthController _authController = AuthController();
 
   @override
   Widget build(BuildContext context) {
@@ -68,44 +68,54 @@ class _RegisterPageState extends State<RegisterPage> {
                     const SizedBox(
                       height: 40,
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        SizedBox(
-                          height: 40,
-                          width: 90,
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.white,
-                                side: BorderSide(color: primary),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10),
+                    (_authController.loading)
+                        ? SizedBox(
+                            height: 40,
+                            width: 40,
+                            child: CircularProgressIndicator(
+                              color: primary,
+                              strokeWidth: 3,
+                            ),
+                          )
+                        : Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              SizedBox(
+                                height: 40,
+                                width: 90,
+                                child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                      backgroundColor: Colors.white,
+                                      side: BorderSide(color: primary),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      foregroundColor: primary),
+                                  onPressed: () => {Navigator.pop(context)},
+                                  child: Text(
+                                    "Cancel",
+                                    style: TextStyle(color: primary),
+                                  ),
                                 ),
-                                foregroundColor: primary),
-                            onPressed: () => {Navigator.pop(context)},
-                            child: Text(
-                              "Cancel",
-                              style: TextStyle(color: primary),
-                            ),
+                              ),
+                              SizedBox(
+                                height: 40,
+                                width: 90,
+                                child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10)),
+                                      backgroundColor: primary),
+                                  onPressed: register,
+                                  child: const Text(
+                                    "Register",
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                ),
+                              )
+                            ],
                           ),
-                        ),
-                        SizedBox(
-                          height: 40,
-                          width: 90,
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10)),
-                                backgroundColor: primary),
-                            onPressed: register,
-                            child: const Text(
-                              "Register",
-                              style: TextStyle(color: Colors.white),
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
                     const Gap(40),
                     (_authController.end)
                         ? Container(
@@ -116,7 +126,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             child: Center(
                               child: Text(
                                 _authController.pesan,
-                                style: TextStyle(
+                                style: const TextStyle(
                                     color: Colors.white, fontSize: 16),
                               ),
                             ),
@@ -131,7 +141,15 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   void register() async {
+    setState(() {
+      _authController.loading = true;
+    });
+
     RegisterModel result = await _authController.register();
+
+    setState(() {
+      _authController.loading = true;
+    });
 
     if (result.code == 1) {
       setState(() {

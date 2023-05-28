@@ -14,4 +14,16 @@ class ApiAuth {
           "password": password,
         }));
   }
+
+  Future<http.Response> signin(String email, String password) {
+    return http.post(
+        Uri.parse("https://freelance-api.cyclic.app/api/users/login"),
+        headers: <String, String>{
+          'Content-Type': "application/json; charset=UTF-8"
+        },
+        body: jsonEncode({
+          "email": email,
+          "password": password,
+        }));
+  }
 }
