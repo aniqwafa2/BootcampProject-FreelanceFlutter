@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:freelance/pages/profile/profile_edit.dart';
 import 'package:freelance/utils/app_styles.dart';
 
 class ProfilePage extends StatelessWidget {
@@ -12,13 +13,12 @@ class ProfilePage extends StatelessWidget {
       child: Column(
         children: [
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Expanded(
-                  flex: 1,
-                  child: Text(
-                    "Profile",
-                    style: Styles.headLineStyle3,
-                  )),
+              Text(
+                "Profile",
+                style: Styles.headLineStyle3,
+              ),
               Container(
                 height: 40,
                 width: 40,
@@ -36,7 +36,7 @@ class ProfilePage extends StatelessWidget {
           Expanded(
             child: Container(
                 width: double.infinity,
-                padding: const EdgeInsets.fromLTRB(0, 50, 0, 50),
+                padding: const EdgeInsets.fromLTRB(15, 50, 15, 20),
                 decoration: BoxDecoration(
                   border: Border.all(color: const Color.fromARGB(51, 0, 0, 0)),
                   color: const Color.fromARGB(255, 255, 255, 255),
@@ -51,20 +51,21 @@ class ProfilePage extends StatelessWidget {
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Column(
                       children: [
                         Container(
                           height: 100,
                           width: 100,
-                          margin: const EdgeInsets.only(bottom: 40),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
                           ),
                           child: const CircleAvatar(
                               backgroundImage:
                                   AssetImage('assets/images/profile.jpg')),
+                        ),
+                        const SizedBox(
+                          height: 40,
                         ),
                         Text(
                           'Ahmad si Rajin',
@@ -79,37 +80,52 @@ class ProfilePage extends StatelessWidget {
                         ),
                       ],
                     ),
+                    const Expanded(child: SizedBox()),
                     Column(
                       children: [
-                        InkWell(
-                          onTap: () => {},
-                          child: Container(
+                        Material(
+                          child: Ink(
                             height: 35,
                             width: 120,
                             decoration: BoxDecoration(
                               color: const Color.fromARGB(255, 25, 167, 206),
-                              borderRadius: BorderRadius.circular(8),
+                              borderRadius: buttonBorder,
                             ),
-                            child: const Center(
-                              child: Text(
-                                'Edit Profile',
+                            child: InkWell(
+                              borderRadius: buttonBorder,
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const ProfileEdit()));
+                              },
+                              child: const Center(
+                                child: Text(
+                                  'Edit Profile',
+                                ),
                               ),
                             ),
                           ),
                         ),
-                        InkWell(
-                          onTap: () => {},
-                          child: Container(
-                            margin: const EdgeInsets.only(top: 12),
+                        const SizedBox(
+                          height: 12,
+                        ),
+                        Material(
+                          child: Ink(
                             height: 35,
                             width: 120,
                             decoration: BoxDecoration(
                               color: const Color.fromARGB(255, 25, 167, 206),
                               borderRadius: BorderRadius.circular(8),
                             ),
-                            child: const Center(
-                              child: Text(
-                                'Log out',
+                            child: InkWell(
+                              onTap: () => {},
+                              borderRadius: BorderRadius.circular(8),
+                              child: const Center(
+                                child: Text(
+                                  'Log out',
+                                ),
                               ),
                             ),
                           ),

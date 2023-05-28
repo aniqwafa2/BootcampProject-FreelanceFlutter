@@ -4,6 +4,10 @@ import 'package:flutter/cupertino.dart';
 Color primary = const Color.fromARGB(255, 25, 167, 206);
 Color primary2 = const Color.fromARGB(255, 175, 211, 226);
 
+BorderRadius cardBorder = BorderRadius.circular(10);
+BorderRadius buttonBorder = BorderRadius.circular(8);
+BorderRadius buttonPojokKananBorder = BorderRadius.circular(20);
+
 class Styles {
   static Color primaryColor = primary;
   static Color textColor = const Color.fromARGB(255, 0, 0, 0);
