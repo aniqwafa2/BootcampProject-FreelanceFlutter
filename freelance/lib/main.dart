@@ -33,13 +33,13 @@ class MyApp extends StatelessWidget {
           } else {
             return MaterialApp(
               debugShowCheckedModeBanner: false,
-              title: 'Flutter Demo',
+              title: 'Freelance App',
               theme: ThemeData(
                 primaryColor: primary,
               ),
-              //home: const BottomBar(),
+              // home: const BottomBar(),
               home: const LoginPage(),
-              //home: const RegisterPage(),
+              // home: const RegisterPage(),
             );
           }
         });
