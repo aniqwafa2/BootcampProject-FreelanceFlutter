@@ -11,7 +11,7 @@ import '../model/register_model.dart';
 import '../model/user_model.dart';
 
 class AuthController {
-  ApiAuth _apiAuth = ApiAuth();
+  final ApiAuth _apiAuth = ApiAuth();
 
   String pesan = "";
   bool end = false;
@@ -42,10 +42,11 @@ class AuthController {
       Map<String, dynamic> converted = jsonDecode(result.body);
       LoginModel loginModel = LoginModel.fromJson(converted);
 
-      if (loginModel.code == 0) {
+      if (loginModel.code == 1) {
         final prefs = await SharedPreferences.getInstance();
 
         //simpan token
+        await prefs.setString("type", loginModel.type);
         await prefs.setString('token', loginModel.access_token);
       }
 

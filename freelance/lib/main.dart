@@ -9,21 +9,13 @@ void main() {
   runApp(const MyApp());
 }
 
+const bool isLogin = false;
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   // This widget is the root of your application.
   @override
-  // Widget build(BuildContext context) {
-  //   return MaterialApp(
-  //     title: 'Flutter Demo',
-  //     theme: ThemeData(
-  //       primaryColor: primary,
-  //     ),
-  //     home: const BottomBar(),
-  //   );
-  // }
-
   Widget build(BuildContext context) {
     return FutureBuilder(
         future: Future.delayed(const Duration(seconds: 2)),

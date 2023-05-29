@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:freelance/layouts/bottom_bar.dart';
 import 'package:freelance/layouts/register.dart';
 import 'package:freelance/model/login_model.dart';
