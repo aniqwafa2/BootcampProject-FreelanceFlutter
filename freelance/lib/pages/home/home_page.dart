@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:freelance/model_widget/rounded_card.dart';
+import 'package:freelance/model_widget/rounded_image.dart';
 import 'package:freelance/pages/home/home_detail.dart';
 import 'package:freelance/utils/app_styles.dart';
 import 'package:gap/gap.dart';
@@ -38,17 +40,9 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ],
                     ),
-                    Container(
-                      height: 40,
-                      width: 40,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: const CircleAvatar(
-                        backgroundImage:
-                            AssetImage("assets/images/profile.jpg"),
-                      ),
-                    )
+                    const RoundedImage(
+                      image: AssetImage('assets/images/profile.jpg'),
+                    ),
                   ],
                 ),
                 const Gap(25),
@@ -100,16 +94,9 @@ class _HomePageState extends State<HomePage> {
                           margin: const EdgeInsets.all(10),
                           child: Column(
                             children: [
-                              Container(
-                                margin: const EdgeInsets.only(top: 2),
-                                height: 50,
-                                width: 50,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(15),
-                                ),
-                                child: const CircleAvatar(
-                                    backgroundImage: AssetImage(
-                                        'assets/images/profile.jpg')),
+                              const RoundedImage(
+                                size: 50,
+                                image: AssetImage('assets/images/profile.jpg'),
                               ),
                               const SizedBox(
                                 height: 7,
@@ -136,126 +123,114 @@ class _HomePageState extends State<HomePage> {
                     )
                   ],
                 ),
-                Card(
-                    shape: RoundedRectangleBorder(borderRadius: cardBorder),
-                    child: InkWell(
-                      borderRadius: cardBorder,
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const HomeDetail()));
-                      },
-                      child: Container(
-                        padding: const EdgeInsets.fromLTRB(10, 15, 10, 12),
-                        child: Row(
+                RoundedCard(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const HomeDetail()));
+                  },
+                  child: Row(
+                    children: [
+                      const Expanded(
+                        flex: 2,
+                        child: RoundedImage(
+                          size: 50,
+                          image: AssetImage('assets/images/profile.jpg'),
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      Expanded(
+                        flex: 5,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Expanded(
-                              flex: 2,
-                              child: Container(
-                                height: 50,
-                                width: 50,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(15),
-                                ),
-                                child: const CircleAvatar(
-                                    backgroundImage: AssetImage(
-                                        'assets/images/profile.jpg')),
-                              ),
+                            Text(
+                              "Job title",
+                              style: Styles.headLineStyle3,
+                              overflow: TextOverflow.ellipsis,
                             ),
+                            const Text('Category'),
                             const SizedBox(
-                              width: 10,
+                              height: 10,
                             ),
-                            Expanded(
-                              flex: 5,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "Job title",
-                                    style: Styles.headLineStyle3,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                  const Text('Category'),
-                                  const SizedBox(
-                                    height: 10,
-                                  ),
-                                  Row(
-                                    children: [
-                                      Icon(
-                                        Icons.fiber_manual_record,
-                                        size: 16,
-                                        color: Styles.primaryColor,
-                                      ),
-                                      const Text("Status")
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                            Row(
                               children: [
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    Icon(
-                                      Icons.person_search_outlined,
-                                      size: 20,
-                                      color: Styles.primaryColor,
-                                    ),
-                                    const SizedBox(
-                                      width: 7,
-                                    ),
-                                    const Text(
-                                      'N applicant',
-                                    ),
-                                  ],
+                                Icon(
+                                  Icons.fiber_manual_record,
+                                  size: 16,
+                                  color: Styles.primaryColor,
                                 ),
-                                const SizedBox(
-                                  height: 7,
-                                ),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    Icon(
-                                      Icons.date_range_outlined,
-                                      size: 20,
-                                      color: Styles.primaryColor,
-                                    ),
-                                    const SizedBox(
-                                      width: 7,
-                                    ),
-                                    const Text(
-                                      'May, 5 2023',
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(
-                                  height: 7,
-                                ),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    Icon(
-                                      Icons.paid_outlined,
-                                      size: 20,
-                                      color: Styles.primaryColor,
-                                    ),
-                                    const SizedBox(
-                                      width: 7,
-                                    ),
-                                    const Text(
-                                      'Rp. 5.000.000',
-                                    ),
-                                  ],
-                                )
+                                const Text("Status")
                               ],
-                            )
+                            ),
                           ],
                         ),
                       ),
-                    )),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Icon(
+                                Icons.person_search_outlined,
+                                size: 20,
+                                color: Styles.primaryColor,
+                              ),
+                              const SizedBox(
+                                width: 7,
+                              ),
+                              const Text(
+                                'N applicant',
+                              ),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 7,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Icon(
+                                Icons.date_range_outlined,
+                                size: 20,
+                                color: Styles.primaryColor,
+                              ),
+                              const SizedBox(
+                                width: 7,
+                              ),
+                              const Text(
+                                'May, 5 2023',
+                              ),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 7,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Icon(
+                                Icons.paid_outlined,
+                                size: 20,
+                                color: Styles.primaryColor,
+                              ),
+                              const SizedBox(
+                                width: 7,
+                              ),
+                              const Text(
+                                'Rp. 5.000.000',
+                              ),
+                            ],
+                          )
+                        ],
+                      )
+                    ],
+                  ),
+                )
               ],
             ),
           ),

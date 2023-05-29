@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:freelance/layouts/header_mainpage.dart';
+import 'package:freelance/model_widget/rounded_card.dart';
+import 'package:freelance/model_widget/rounded_image.dart';
 import 'package:freelance/pages/my_job/my_job_detail.dart';
 import 'package:freelance/utils/app_styles.dart';
 
@@ -12,24 +15,7 @@ class MyJobPage extends StatelessWidget {
       padding: const EdgeInsets.all(20),
       child: Column(
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                "MyJob ${MediaQuery.of(context).size.width}",
-                style: Styles.headLineStyle3,
-              ),
-              Container(
-                height: 40,
-                width: 40,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: const CircleAvatar(
-                    backgroundImage: AssetImage('assets/images/profile.jpg')),
-              )
-            ],
-          ),
+          MainPageHeader(title: 'MyJob ${MediaQuery.of(context).size.width}'),
           const SizedBox(
             height: 20,
           ),
@@ -66,96 +52,84 @@ class MyJobPage extends StatelessWidget {
           Expanded(
             child: ListView(
               children: [
-                Card(
-                    shape: RoundedRectangleBorder(borderRadius: cardBorder),
-                    child: InkWell(
-                      borderRadius: cardBorder,
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const MyJobDetail()));
-                      },
-                      child: Container(
-                        padding: const EdgeInsets.fromLTRB(10, 15, 10, 12),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
+                RoundedCard(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const MyJobDetail()));
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Expanded(
+                        flex: 1,
+                        child: RoundedImage(
+                          size: 50,
+                          image: AssetImage('assets/images/profile.jpg'),
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      Expanded(
+                        flex: 4,
+                        child: Column(
                           children: [
-                            Expanded(
-                              flex: 1,
-                              child: Container(
-                                height: 50,
-                                width: 50,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(15),
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: Text(
+                                    "Job title",
+                                    style: Styles.headLineStyle3,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
                                 ),
-                                child: const CircleAvatar(
-                                    backgroundImage: AssetImage(
-                                        'assets/images/profile.jpg')),
-                              ),
+                                const SizedBox(
+                                  width: 20,
+                                ),
+                                Text(
+                                  'Applied At',
+                                  style: Styles.headLineStyle3,
+                                )
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                const Expanded(
+                                  child: Text(
+                                    "Category",
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ),
+                                const SizedBox(
+                                  width: 20,
+                                ),
+                                Text(
+                                  'May, 5 2023',
+                                  style: Styles.headLineStyle3,
+                                )
+                              ],
                             ),
                             const SizedBox(
-                              width: 10,
+                              height: 5,
                             ),
-                            Expanded(
-                              flex: 4,
-                              child: Column(
-                                children: [
-                                  Row(
-                                    children: [
-                                      Expanded(
-                                        child: Text(
-                                          "Job title",
-                                          style: Styles.headLineStyle3,
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
-                                      ),
-                                      const SizedBox(
-                                        width: 20,
-                                      ),
-                                      Text(
-                                        'Applied At',
-                                        style: Styles.headLineStyle3,
-                                      )
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      const Expanded(
-                                        child: Text(
-                                          "Category",
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
-                                      ),
-                                      const SizedBox(
-                                        width: 20,
-                                      ),
-                                      Text(
-                                        'May, 5 2023',
-                                        style: Styles.headLineStyle3,
-                                      )
-                                    ],
-                                  ),
-                                  const SizedBox(
-                                    height: 5,
-                                  ),
-                                  Row(
-                                    children: [
-                                      Icon(
-                                        Icons.fiber_manual_record,
-                                        size: 16,
-                                        color: Styles.primaryColor,
-                                      ),
-                                      const Text("Status")
-                                    ],
-                                  ),
-                                ],
-                              ),
+                            Row(
+                              children: [
+                                Icon(
+                                  Icons.fiber_manual_record,
+                                  size: 16,
+                                  color: Styles.primaryColor,
+                                ),
+                                const Text("Status")
+                              ],
                             ),
                           ],
                         ),
                       ),
-                    )),
+                    ],
+                  ),
+                ),
               ],
             ),
           ),
