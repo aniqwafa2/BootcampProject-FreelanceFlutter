@@ -42,7 +42,7 @@ class AuthController {
       Map<String, dynamic> converted = jsonDecode(result.body);
       LoginModel loginModel = LoginModel.fromJson(converted);
 
-      if (loginModel.code == 0) {
+      if (loginModel.code == 1) {
         final prefs = await SharedPreferences.getInstance();
 
         //simpan token

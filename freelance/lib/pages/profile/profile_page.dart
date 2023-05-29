@@ -1,9 +1,51 @@
 import 'package:flutter/material.dart';
+import 'package:freelance/layouts/login.dart';
 import 'package:freelance/pages/profile/profile_edit.dart';
 import 'package:freelance/utils/app_styles.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class ProfilePage extends StatelessWidget {
+class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
+
+  @override
+  State<ProfilePage> createState() => _ProfilePageState();
+}
+
+class _ProfilePageState extends State<ProfilePage> {
+  logOut() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    setState(() {
+      preferences.remove("token");
+    });
+
+    if (context.mounted) {
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(
+          builder: (BuildContext context) => const LoginPage(),
+        ),
+        (route) => false,
+      );
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+            content: Text(
+          "Berhasil logout",
+          style: TextStyle(fontSize: 16),
+        )),
+      );
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  dispose() {
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -120,7 +162,7 @@ class ProfilePage extends StatelessWidget {
                               borderRadius: BorderRadius.circular(8),
                             ),
                             child: InkWell(
-                              onTap: () => {},
+                              onTap: logOut,
                               borderRadius: BorderRadius.circular(8),
                               child: const Center(
                                 child: Text(
