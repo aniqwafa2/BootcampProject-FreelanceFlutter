@@ -2,19 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:freelance/model/job_model.dart';
+import 'package:timeago/timeago.dart' as timeago;
+import '../../../utils/app_styles.dart';
+import '../home_detail.dart';
 
-import '../../utils/app_styles.dart';
-import 'home_detail.dart';
-
-class HomeJobItem extends StatefulWidget {
+class HomeJobItem extends StatelessWidget {
   final JobModel jobModel;
   const HomeJobItem(this.jobModel, {super.key});
 
-  @override
-  State<HomeJobItem> createState() => _HomeJobItemState();
-}
-
-class _HomeJobItemState extends State<HomeJobItem> {
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -51,11 +46,11 @@ class _HomeJobItemState extends State<HomeJobItem> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Job title",
+                        jobModel.name,
                         style: Styles.headLineStyle3,
                         overflow: TextOverflow.ellipsis,
                       ),
-                      const Text('Category'),
+                      Text(jobModel.category),
                       const SizedBox(
                         height: 10,
                       ),
@@ -64,9 +59,13 @@ class _HomeJobItemState extends State<HomeJobItem> {
                           Icon(
                             Icons.fiber_manual_record,
                             size: 16,
-                            color: Styles.primaryColor,
+                            color: (jobModel.status)
+                                ? Colors.red
+                                : Styles.primaryColor,
                           ),
-                          const Text("Status")
+                          (jobModel.status)
+                              ? const Text("Closed")
+                              : const Text("Open")
                         ],
                       ),
                     ],
@@ -105,8 +104,8 @@ class _HomeJobItemState extends State<HomeJobItem> {
                         const SizedBox(
                           width: 7,
                         ),
-                        const Text(
-                          'May, 5 2023',
+                        Text(
+                          "${timeago.format(DateTime.parse("${jobModel.createdAt}"))}",
                         ),
                       ],
                     ),

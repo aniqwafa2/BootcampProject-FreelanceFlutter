@@ -1,9 +1,12 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:freelance/controller/category_controller.dart';
 import 'package:freelance/controller/job_controller.dart';
 import 'package:freelance/model/api_respons.dart';
 import 'package:freelance/model/job_model.dart';
 import 'package:freelance/pages/home/home_detail.dart';
-import 'package:freelance/pages/home/home_jobs_item.dart';
+import 'package:freelance/pages/home/widgets/home_categories_item.dart';
+import 'package:freelance/pages/home/widgets/home_jobs_item.dart';
 import 'package:freelance/utils/app_styles.dart';
 import 'package:gap/gap.dart';
 
@@ -16,6 +19,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final JobController _jobController = JobController();
+  final CategoryController _categoryController = CategoryController();
 
   @override
   void initState() {
@@ -26,8 +30,8 @@ class _HomePageState extends State<HomePage> {
 
   void getAllJobs() async {
     ApiRespons result = await _jobController.getJobslist();
+    ApiRespons result2 = await _categoryController.getCategorylist();
     setState(() {});
-    //debugPrint("${_jobController.items}");
   }
 
   @override
@@ -91,6 +95,10 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                   ),
+                  TextButton(
+                    onPressed: () => {},
+                    child: Text("Search"),
+                  )
                 ],
               )),
           const Gap(25),
@@ -103,40 +111,24 @@ class _HomePageState extends State<HomePage> {
               )
             ],
           ),
-          Row(
-            children: [
-              Card(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10)),
-                  child: Container(
-                    width: 75,
-                    margin: const EdgeInsets.all(10),
-                    child: Column(
-                      children: [
-                        Container(
-                          margin: const EdgeInsets.only(top: 2),
-                          height: 50,
-                          width: 50,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(15),
-                          ),
-                          child: const CircleAvatar(
-                              backgroundImage:
-                                  AssetImage('assets/images/profile.jpg')),
-                        ),
-                        const SizedBox(
-                          height: 7,
-                        ),
-                        Text(
-                          "Cat. name",
-                          style: Styles.headLineStyle3,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ],
+          SizedBox(
+              height: 120,
+              child: Row(
+                children: [
+                  Expanded(
+                    child: ListView.builder(
+                      itemBuilder: (context, index) {
+                        return HomeCategoriesItem(
+                          _categoryController.items[index],
+                          key: Key("$index"),
+                        );
+                      },
+                      itemCount: _categoryController.items.length,
+                      scrollDirection: Axis.horizontal,
                     ),
-                  )),
-            ],
-          ),
+                  ),
+                ],
+              )),
           const SizedBox(
             height: 12,
           ),
