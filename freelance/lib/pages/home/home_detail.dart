@@ -12,8 +12,12 @@ import 'package:intl/intl.dart';
 class HomeDetail extends StatefulWidget {
   final JobModel jobModel;
   final int applicant;
+  final bool aplied;
   const HomeDetail(
-      {super.key, required this.jobModel, required this.applicant});
+      {super.key,
+      required this.jobModel,
+      required this.applicant,
+      required this.aplied});
 
   @override
   State<HomeDetail> createState() => _HomeDetailState();
@@ -187,10 +191,15 @@ class _HomeDetailState extends State<HomeDetail> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      RoundedButton(
-                        title: 'Apply',
-                        onTap: () {},
-                      )
+                      (widget.aplied)
+                          ? RoundedButton(
+                              title: 'Applied',
+                              onTap: () => {},
+                            )
+                          : RoundedButton(
+                              title: 'Apply',
+                              onTap: apply,
+                            )
                     ],
                   ),
                 ],
@@ -206,29 +215,14 @@ class _HomeDetailState extends State<HomeDetail> {
   }
 
   void apply() async {
-    // setState(() {
-    //   _authController.loading = true;
-    // });
+    ApiRespons result = await _jobController.applyJob(widget.jobModel.id);
 
-    //ApiRespons result = await _jobController;
-
-    // setState(() {
-    //   _authController.loading = true;
-    // });
-
-    // if (result.code == 1) {
-    //   setState(() {
-    //     _authController.end = true;
-    //     _authController.pesan = result.message;
-    //   });
-    //   Future.delayed(const Duration(seconds: 1), () {
-    //     Navigator.pop(context);
-    //   });
-    // } else {
-    //   setState(() {
-    //     _authController.end = true;
-    //     _authController.pesan = result.message;
-    //   });
-    // }
+    Future.delayed(const Duration(seconds: 1), () {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(result.message)));
+      Future.delayed(const Duration(seconds: 1), () {
+        Navigator.pop(context);
+      });
+    });
   }
 }

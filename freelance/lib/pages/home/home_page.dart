@@ -31,7 +31,11 @@ class _HomePageState extends State<HomePage> {
   void getAllJobs() async {
     ApiRespons result = await _jobController.getJobslist();
     ApiRespons result2 = await _categoryController.getCategorylist();
-    setState(() {});
+    if (mounted) {
+      setState(() {
+        // Your state change code goes here
+      });
+    }
   }
 
   @override

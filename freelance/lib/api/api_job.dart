@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:freelance/config/config_url.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -22,13 +24,16 @@ class ApiJob {
     );
   }
 
-  Future<http.Response> applyJob(int jobId) {
-    return http.put(
-      Uri.parse(
-          "https://freelance-api.cyclic.app/api/applicants/find/job/$jobId"),
-      headers: <String, String>{
-        'Content-Type': "application/json; charset=UTF-8"
-      },
-    );
+  Future<http.Response> applyJob(int jobId, int userId, String token) {
+    return http.post(
+        Uri.parse("https://freelance-api.cyclic.app/api/applicants/apply"),
+        headers: <String, String>{
+          'Content-Type': "application/json; charset=UTF-8",
+          HttpHeaders.authorizationHeader: token
+        },
+        body: jsonEncode({
+          "jobId": jobId,
+          "userId": userId,
+        }));
   }
 }

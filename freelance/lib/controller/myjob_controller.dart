@@ -12,7 +12,7 @@ class MyJobController {
     final getId = await _userToken.getUserId();
     http.Response result = await _apiMyJob.getAllMyJob(getId);
     if (result.statusCode < 400) {
-      debugPrint(result.body);
+      //debugPrint(result.body);
       return myJobListModelFromJson(result.body);
     } else {
       return null;
