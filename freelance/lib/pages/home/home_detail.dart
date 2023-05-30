@@ -1,8 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:freelance/controller/job_controller.dart';
+import 'package:freelance/model/api_respons.dart';
+import 'package:freelance/model/job_model.dart';
 import 'package:freelance/utils/app_styles.dart';
+import 'package:timeago/timeago.dart' as timeago;
+import 'package:intl/intl.dart';
 
-class HomeDetail extends StatelessWidget {
-  const HomeDetail({super.key});
+class HomeDetail extends StatefulWidget {
+  final JobModel jobModel;
+  final int applicant;
+  const HomeDetail(
+      {super.key, required this.jobModel, required this.applicant});
+
+  @override
+  State<HomeDetail> createState() => _HomeDetailState();
+}
+
+class _HomeDetailState extends State<HomeDetail> {
+  final formatCurrency = NumberFormat.simpleCurrency(locale: 'id_ID');
+  final JobController _jobController = JobController();
 
   @override
   Widget build(BuildContext context) {
@@ -85,11 +101,11 @@ class HomeDetail extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                "Job title",
+                                widget.jobModel.name,
                                 style: Styles.headLineStyle3,
                                 overflow: TextOverflow.ellipsis,
                               ),
-                              const Text('Category'),
+                              Text(widget.jobModel.category),
                               const SizedBox(
                                 height: 10,
                               ),
@@ -98,9 +114,13 @@ class HomeDetail extends StatelessWidget {
                                   Icon(
                                     Icons.fiber_manual_record,
                                     size: 16,
-                                    color: Styles.primaryColor,
+                                    color: (widget.jobModel.status)
+                                        ? Colors.red
+                                        : Styles.primaryColor,
                                   ),
-                                  const Text("Status")
+                                  (widget.jobModel.status)
+                                      ? const Text("Closed")
+                                      : const Text("Open")
                                 ],
                               ),
                             ],
@@ -120,8 +140,8 @@ class HomeDetail extends StatelessWidget {
                                 const SizedBox(
                                   width: 7,
                                 ),
-                                const Text(
-                                  'N applicant',
+                                Text(
+                                  '${widget.applicant} applicant',
                                 ),
                               ],
                             ),
@@ -139,8 +159,9 @@ class HomeDetail extends StatelessWidget {
                                 const SizedBox(
                                   width: 7,
                                 ),
-                                const Text(
-                                  'May, 5 2023',
+                                Text(
+                                  timeago.format(DateTime.parse(
+                                      widget.jobModel.createdAt)),
                                 ),
                               ],
                             ),
@@ -158,8 +179,8 @@ class HomeDetail extends StatelessWidget {
                                 const SizedBox(
                                   width: 7,
                                 ),
-                                const Text(
-                                  'Rp. 5.000.000',
+                                Text(
+                                  formatCurrency.format(widget.jobModel.price),
                                 ),
                               ],
                             )
@@ -177,10 +198,10 @@ class HomeDetail extends StatelessWidget {
                     const SizedBox(
                       height: 10,
                     ),
-                    const Expanded(
+                    Expanded(
                       child: SingleChildScrollView(
                         child: Text(
-                          'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+                          widget.jobModel.description,
                           textAlign: TextAlign.justify,
                         ),
                       ),
@@ -195,7 +216,7 @@ class HomeDetail extends StatelessWidget {
                     const SizedBox(
                       height: 10,
                     ),
-                    const Text('ERD.pdf'),
+                    Text(widget.jobModel.file),
                     const Expanded(
                       child: SizedBox(),
                     ),
@@ -234,5 +255,32 @@ class HomeDetail extends StatelessWidget {
         ),
       )),
     );
+  }
+
+  void apply() async {
+    // setState(() {
+    //   _authController.loading = true;
+    // });
+
+    //ApiRespons result = await _jobController;
+
+    // setState(() {
+    //   _authController.loading = true;
+    // });
+
+    // if (result.code == 1) {
+    //   setState(() {
+    //     _authController.end = true;
+    //     _authController.pesan = result.message;
+    //   });
+    //   Future.delayed(const Duration(seconds: 1), () {
+    //     Navigator.pop(context);
+    //   });
+    // } else {
+    //   setState(() {
+    //     _authController.end = true;
+    //     _authController.pesan = result.message;
+    //   });
+    // }
   }
 }

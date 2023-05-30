@@ -1,14 +1,34 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:intl/intl.dart';
+import 'package:freelance/controller/job_controller.dart';
+import 'package:freelance/model/api_respons.dart';
 import 'package:freelance/model/job_model.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import '../../../utils/app_styles.dart';
 import '../home_detail.dart';
 
-class HomeJobItem extends StatelessWidget {
+class HomeJobItem extends StatefulWidget {
   final JobModel jobModel;
   const HomeJobItem(this.jobModel, {super.key});
+
+  @override
+  State<HomeJobItem> createState() => _HomeJobItemState();
+}
+
+class _HomeJobItemState extends State<HomeJobItem> {
+  final JobController _jobAplicantController = JobController();
+  final formatCurrency = NumberFormat.simpleCurrency(locale: 'id_ID');
+
+  @override
+  void initState() {
+    getJobAplicant(widget.jobModel.id);
+    super.initState();
+  }
+
+  void getJobAplicant(int jobId) async {
+    ApiRespons result4 = await _jobAplicantController.getJobsAplicant(jobId);
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -17,8 +37,13 @@ class HomeJobItem extends StatelessWidget {
         child: InkWell(
           borderRadius: cardBorder,
           onTap: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => const HomeDetail()));
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => HomeDetail(
+                          jobModel: widget.jobModel,
+                          applicant: _jobAplicantController.useritems.length,
+                        )));
           },
           child: Container(
             padding: const EdgeInsets.fromLTRB(10, 15, 10, 12),
@@ -46,11 +71,11 @@ class HomeJobItem extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        jobModel.name,
+                        widget.jobModel.name,
                         style: Styles.headLineStyle3,
                         overflow: TextOverflow.ellipsis,
                       ),
-                      Text(jobModel.category),
+                      Text(widget.jobModel.category),
                       const SizedBox(
                         height: 10,
                       ),
@@ -59,11 +84,11 @@ class HomeJobItem extends StatelessWidget {
                           Icon(
                             Icons.fiber_manual_record,
                             size: 16,
-                            color: (jobModel.status)
+                            color: (widget.jobModel.status)
                                 ? Colors.red
                                 : Styles.primaryColor,
                           ),
-                          (jobModel.status)
+                          (widget.jobModel.status)
                               ? const Text("Closed")
                               : const Text("Open")
                         ],
@@ -85,8 +110,8 @@ class HomeJobItem extends StatelessWidget {
                         const SizedBox(
                           width: 7,
                         ),
-                        const Text(
-                          'N applicant',
+                        Text(
+                          "${_jobAplicantController.useritems.length} applicant",
                         ),
                       ],
                     ),
@@ -105,7 +130,8 @@ class HomeJobItem extends StatelessWidget {
                           width: 7,
                         ),
                         Text(
-                          "${timeago.format(DateTime.parse("${jobModel.createdAt}"))}",
+                          timeago.format(
+                              DateTime.parse(widget.jobModel.createdAt)),
                         ),
                       ],
                     ),
@@ -123,8 +149,8 @@ class HomeJobItem extends StatelessWidget {
                         const SizedBox(
                           width: 7,
                         ),
-                        const Text(
-                          'Rp. 5.000.000',
+                        Text(
+                          formatCurrency.format(widget.jobModel.price),
                         ),
                       ],
                     )

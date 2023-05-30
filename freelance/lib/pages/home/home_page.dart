@@ -5,6 +5,7 @@ import 'package:freelance/controller/job_controller.dart';
 import 'package:freelance/model/api_respons.dart';
 import 'package:freelance/model/job_model.dart';
 import 'package:freelance/pages/home/home_detail.dart';
+import 'package:freelance/pages/home/widgets/home_bycategories.dart';
 import 'package:freelance/pages/home/widgets/home_categories_item.dart';
 import 'package:freelance/pages/home/widgets/home_jobs_item.dart';
 import 'package:freelance/utils/app_styles.dart';
@@ -36,6 +37,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    TextEditingController _searchController = TextEditingController();
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Column(
@@ -87,7 +89,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                   Expanded(
                     child: TextFormField(
-                      //controller: search,
+                      controller: _searchController,
                       keyboardType: TextInputType.text,
                       cursorColor: Colors.blue,
                       decoration: const InputDecoration.collapsed(
@@ -96,7 +98,13 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                   TextButton(
-                    onPressed: () => {},
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => HomeByCategories(
+                                  categoryname: _searchController.text)));
+                    },
                     child: Text("Search"),
                   )
                 ],
