@@ -1,8 +1,4 @@
-import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:freelance/controller/auth_controller.dart';
 import 'package:freelance/model/register_model.dart';
 import 'package:freelance/utils/auth.dart';

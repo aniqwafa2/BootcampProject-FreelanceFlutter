@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:freelance/controller/myjob_controller.dart';
+import 'package:freelance/layouts/header_mainpage.dart';
+import 'package:freelance/model/myjob_model.dart';
+import 'package:freelance/model_widget/rounded_card.dart';
+import 'package:freelance/model_widget/rounded_image.dart';
 import 'package:freelance/pages/my_job/my_job_detail.dart';
 import 'package:freelance/utils/app_styles.dart';
+import 'package:intl/intl.dart';
 
 class MyJobPage extends StatelessWidget {
   const MyJobPage({super.key});
@@ -12,24 +18,7 @@ class MyJobPage extends StatelessWidget {
       padding: const EdgeInsets.all(20),
       child: Column(
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                "MyJob ${MediaQuery.of(context).size.width}",
-                style: Styles.headLineStyle3,
-              ),
-              Container(
-                height: 40,
-                width: 40,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: const CircleAvatar(
-                    backgroundImage: AssetImage('assets/images/profile.jpg')),
-              )
-            ],
-          ),
+          MainPageHeader(title: 'MyJob ${MediaQuery.of(context).size.width}'),
           const SizedBox(
             height: 20,
           ),
@@ -63,104 +52,156 @@ class MyJobPage extends StatelessWidget {
           const SizedBox(
             height: 20,
           ),
-          Expanded(
-            child: ListView(
-              children: [
-                Card(
-                    shape: RoundedRectangleBorder(borderRadius: cardBorder),
-                    child: InkWell(
-                      borderRadius: cardBorder,
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const MyJobDetail()));
-                      },
-                      child: Container(
-                        padding: const EdgeInsets.fromLTRB(10, 15, 10, 12),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Expanded(
-                              flex: 1,
-                              child: Container(
-                                height: 50,
-                                width: 50,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(15),
-                                ),
-                                child: const CircleAvatar(
-                                    backgroundImage: AssetImage(
-                                        'assets/images/profile.jpg')),
-                              ),
-                            ),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            Expanded(
-                              flex: 4,
-                              child: Column(
-                                children: [
-                                  Row(
-                                    children: [
-                                      Expanded(
-                                        child: Text(
-                                          "Job title",
-                                          style: Styles.headLineStyle3,
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
-                                      ),
-                                      const SizedBox(
-                                        width: 20,
-                                      ),
-                                      Text(
-                                        'Applied At',
-                                        style: Styles.headLineStyle3,
-                                      )
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      const Expanded(
-                                        child: Text(
-                                          "Category",
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
-                                      ),
-                                      const SizedBox(
-                                        width: 20,
-                                      ),
-                                      Text(
-                                        'May, 5 2023',
-                                        style: Styles.headLineStyle3,
-                                      )
-                                    ],
-                                  ),
-                                  const SizedBox(
-                                    height: 5,
-                                  ),
-                                  Row(
-                                    children: [
-                                      Icon(
-                                        Icons.fiber_manual_record,
-                                        size: 16,
-                                        color: Styles.primaryColor,
-                                      ),
-                                      const Text("Status")
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    )),
-              ],
-            ),
+          const Expanded(
+            child: MyJobListView(),
           ),
         ],
       ),
     ));
+  }
+}
+
+class MyJobListView extends StatefulWidget {
+  const MyJobListView({
+    super.key,
+  });
+
+  @override
+  State<MyJobListView> createState() => _MyJobListViewState();
+}
+
+class _MyJobListViewState extends State<MyJobListView> {
+  final MyJobController _myJobController = MyJobController();
+  List<Datum>? _myJobList;
+
+  @override
+  void initState() {
+    super.initState();
+    getData();
+  }
+
+  Future<void> getData() async {
+    MyJobListModel? myJobList = await _myJobController.getData();
+    if (myJobList != null) {
+      setState(() {
+        _myJobList = myJobList.data;
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return _myJobList == null
+        ? const Center(child: CircularProgressIndicator())
+        : ListView.builder(
+            itemCount: _myJobList!.length,
+            itemBuilder: (BuildContext context, int index) {
+              Datum item = _myJobList![index];
+              return RoundedCard(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const MyJobDetail()));
+                },
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Expanded(
+                      flex: 1,
+                      child: RoundedImage(
+                        size: 50,
+                        image: AssetImage('assets/images/profile.jpg'),
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    Expanded(
+                      flex: 4,
+                      child: Column(
+                        children: [
+                          Row(
+                            children: [
+                              Expanded(
+                                child: Text(
+                                  "${item.job!.name}",
+                                  style: Styles.headLineStyle3,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                              const SizedBox(
+                                width: 20,
+                              ),
+                              Text(
+                                'Applied At',
+                                style: Styles.headLineStyle3,
+                              )
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              const Expanded(
+                                child: Text(
+                                  "Category",
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                              const SizedBox(
+                                width: 20,
+                              ),
+                              Text(
+                                DateFormat('MMM, d yyyy')
+                                    .format(item.createdAt!),
+                                style: Styles.headLineStyle3,
+                              )
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          if (item.status! && item.job!.status!)
+                            Status(
+                              color: Colors.lightGreen.shade800,
+                              status: 'Accepted',
+                            )
+                          else
+                            Status(
+                              color: Styles.primaryColor,
+                              status: 'Applied',
+                            )
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            },
+          );
+  }
+}
+
+class Status extends StatelessWidget {
+  final Color color;
+  final String status;
+
+  const Status({
+    super.key,
+    required this.color,
+    required this.status,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Icon(
+          Icons.fiber_manual_record,
+          size: 16,
+          color: color,
+        ),
+        Text(status)
+      ],
+    );
   }
 }

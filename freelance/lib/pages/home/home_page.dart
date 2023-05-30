@@ -4,7 +4,6 @@ import 'package:freelance/controller/category_controller.dart';
 import 'package:freelance/controller/job_controller.dart';
 import 'package:freelance/model/api_respons.dart';
 import 'package:freelance/model/job_model.dart';
-import 'package:freelance/pages/home/home_detail.dart';
 import 'package:freelance/pages/home/widgets/home_bycategories.dart';
 import 'package:freelance/pages/home/widgets/home_categories_item.dart';
 import 'package:freelance/pages/home/widgets/home_jobs_item.dart';

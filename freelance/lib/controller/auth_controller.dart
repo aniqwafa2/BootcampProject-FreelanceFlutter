@@ -11,7 +11,7 @@ import '../model/register_model.dart';
 import '../model/user_model.dart';
 
 class AuthController {
-  ApiAuth _apiAuth = ApiAuth();
+  final ApiAuth _apiAuth = ApiAuth();
 
   String pesan = "";
   bool end = false;
@@ -46,6 +46,7 @@ class AuthController {
         final prefs = await SharedPreferences.getInstance();
 
         //simpan token
+        await prefs.setString("type", loginModel.type);
         await prefs.setString('token', loginModel.access_token);
       }
 
