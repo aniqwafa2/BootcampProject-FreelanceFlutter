@@ -27,7 +27,6 @@ class CategoryController {
           ApiRespons.fromJson(myBody, createList);
 
       if (myRespons.data != null) items.addAll(myRespons.data!);
-      debugPrint("${myRespons.data}");
       return myRespons;
     } else {
       return ApiRespons(code: 0, message: "error");

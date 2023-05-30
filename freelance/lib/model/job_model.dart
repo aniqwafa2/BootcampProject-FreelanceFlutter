@@ -29,7 +29,7 @@ class JobModel {
         id: json['id'],
         name: json['name'],
         price: json['price'],
-        description: json['description'],
+        description: (json['description'] != null) ? json['description'] : "",
         categoryId: json['categoryId'],
         status: json['status'],
         file: json['file'],

@@ -14,8 +14,8 @@ import '../model/user_model.dart';
 
 class JobController {
   ApiJob _apiJob = ApiJob();
-
   List<JobModel> items = [];
+  List<UserModel> useritems = [];
 
   Future<ApiRespons> getJobslist() async {
     http.Response result = await _apiJob.getJob();
@@ -35,4 +35,28 @@ class JobController {
   List<JobModel> createList(List json) {
     return json.map((e) => JobModel.fromJson(e)).toList();
   }
+
+  Future<ApiRespons> getJobsAplicant(int jobId) async {
+    http.Response result = await _apiJob.getAplicant(jobId);
+    if (result.statusCode == 200) {
+      Map<String, dynamic> myBody = jsonDecode(result.body);
+      ApiRespons<List<UserModel>> myRespons =
+          ApiRespons.fromJson(myBody, createUserList);
+      if (myRespons.data?.isNotEmpty ?? true) {
+        useritems.addAll(myRespons.data!);
+      }
+
+      return myRespons;
+    } else {
+      return ApiRespons(code: 0, message: "error");
+    }
+  }
+
+  List<UserModel> createUserList(List json) {
+    return json.map((e) => UserModel.fromJson(e)).toList();
+  }
+
+  // Future<ApiRespons> applyJob(int jobId) async {
+  //   http.Response result = await _apiJob.
+  // }
 }
