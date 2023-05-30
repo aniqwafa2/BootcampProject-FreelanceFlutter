@@ -10,6 +10,7 @@ class HomeDetail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: primary2,
       body: SafeArea(
           child: Container(
         padding: const EdgeInsets.all(20),
