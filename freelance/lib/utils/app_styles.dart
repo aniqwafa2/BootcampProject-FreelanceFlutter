@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:intl/intl.dart';
 
 Color primary = const Color.fromARGB(255, 25, 167, 206);
 Color primary2 = const Color.fromARGB(255, 175, 211, 226);
@@ -7,6 +8,9 @@ Color primary2 = const Color.fromARGB(255, 175, 211, 226);
 BorderRadius cardBorder = BorderRadius.circular(10);
 BorderRadius buttonBorder = BorderRadius.circular(8);
 BorderRadius buttonPojokKananBorder = BorderRadius.circular(20);
+
+NumberFormat formatRupiah =
+    NumberFormat.currency(locale: 'id_ID', symbol: 'Rp. ', decimalDigits: 0);
 
 class Styles {
   static Color primaryColor = primary;

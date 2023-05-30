@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:freelance/model_widget/rounded_card.dart';
-import 'package:intl/intl.dart';
 import 'package:freelance/controller/job_controller.dart';
-import 'package:freelance/model/api_respons.dart';
 import 'package:freelance/model/job_model.dart';
-import 'package:timeago/timeago.dart' as timeago;
+import 'package:freelance/model_widget/row_status.dart';
+import 'package:intl/intl.dart';
 import '../../../utils/app_styles.dart';
 import '../home_detail.dart';
 
@@ -18,7 +17,6 @@ class HomeJobItem extends StatefulWidget {
 
 class _HomeJobItemState extends State<HomeJobItem> {
   final JobController _jobAplicantController = JobController();
-  final formatCurrency = NumberFormat.simpleCurrency(locale: 'id_ID');
 
   @override
   void initState() {
@@ -27,8 +25,17 @@ class _HomeJobItemState extends State<HomeJobItem> {
   }
 
   void getJobAplicant(int jobId) async {
-    ApiRespons result4 = await _jobAplicantController.getJobsAplicant(jobId);
-    setState(() {});
+    await _jobAplicantController.getJobsAplicant(jobId);
+    if (mounted) {
+      setState(() {});
+    }
+  }
+
+  bool checkStatus() {
+    var jobStatus = widget.jobModel.status;
+    var dateStatus =
+        DateTime.parse(widget.jobModel.dueDate).isBefore(DateTime.now());
+    return jobStatus || dateStatus;
   }
 
   @override
@@ -74,20 +81,9 @@ class _HomeJobItemState extends State<HomeJobItem> {
                 const SizedBox(
                   height: 10,
                 ),
-                Row(
-                  children: [
-                    Icon(
-                      Icons.fiber_manual_record,
-                      size: 16,
-                      color: (widget.jobModel.status)
-                          ? Colors.red
-                          : Styles.primaryColor,
-                    ),
-                    (widget.jobModel.status)
-                        ? const Text("Closed")
-                        : const Text("Open")
-                  ],
-                ),
+                checkStatus()
+                    ? const Status(color: Colors.red, status: 'Closed')
+                    : Status(color: Styles.primaryColor, status: 'Open'),
               ],
             ),
           ),
@@ -124,9 +120,10 @@ class _HomeJobItemState extends State<HomeJobItem> {
                   const SizedBox(
                     width: 7,
                   ),
-                  Text(
-                    timeago.format(DateTime.parse(widget.jobModel.createdAt)),
-                  ),
+                  Text(DateFormat('MMM, d yyyy')
+                          .format(DateTime.parse(widget.jobModel.dueDate))
+                      // timeago.format(DateTime.parse(widget.jobModel.createdAt)),
+                      ),
                 ],
               ),
               const SizedBox(
@@ -144,7 +141,7 @@ class _HomeJobItemState extends State<HomeJobItem> {
                     width: 7,
                   ),
                   Text(
-                    formatCurrency.format(widget.jobModel.price),
+                    formatRupiah.format(widget.jobModel.price),
                   ),
                 ],
               )

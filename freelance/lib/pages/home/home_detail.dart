@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:freelance/controller/job_controller.dart';
-import 'package:freelance/model/api_respons.dart';
 import 'package:freelance/model/job_model.dart';
 import 'package:freelance/layouts/header_detail.dart';
 import 'package:freelance/model_widget/rounded_button.dart';
 import 'package:freelance/model_widget/rounded_detailcard.dart';
+import 'package:freelance/model_widget/row_status.dart';
 import 'package:freelance/utils/app_styles.dart';
-import 'package:timeago/timeago.dart' as timeago;
 import 'package:intl/intl.dart';
 
 class HomeDetail extends StatefulWidget {
@@ -20,8 +18,12 @@ class HomeDetail extends StatefulWidget {
 }
 
 class _HomeDetailState extends State<HomeDetail> {
-  final formatCurrency = NumberFormat.simpleCurrency(locale: 'id_ID');
-  final JobController _jobController = JobController();
+  bool checkStatus() {
+    var jobStatus = widget.jobModel.status;
+    var dateStatus =
+        DateTime.parse(widget.jobModel.dueDate).isBefore(DateTime.now());
+    return jobStatus || dateStatus;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +47,6 @@ class _HomeDetailState extends State<HomeDetail> {
                       Expanded(
                         flex: 2,
                         child: Container(
-                          // margin: const EdgeInsets.only(top: 5),
                           height: 50,
                           width: 50,
                           decoration: BoxDecoration(
@@ -73,20 +74,11 @@ class _HomeDetailState extends State<HomeDetail> {
                             const SizedBox(
                               height: 10,
                             ),
-                            Row(
-                              children: [
-                                Icon(
-                                  Icons.fiber_manual_record,
-                                  size: 16,
-                                  color: (widget.jobModel.status)
-                                      ? Colors.red
-                                      : Styles.primaryColor,
-                                ),
-                                (widget.jobModel.status)
-                                    ? const Text("Closed")
-                                    : const Text("Open")
-                              ],
-                            ),
+                            checkStatus()
+                                ? const Status(
+                                    color: Colors.red, status: 'Closed')
+                                : Status(
+                                    color: Styles.primaryColor, status: 'Open'),
                           ],
                         ),
                       ),
@@ -124,8 +116,10 @@ class _HomeDetailState extends State<HomeDetail> {
                                 width: 7,
                               ),
                               Text(
-                                timeago.format(
-                                    DateTime.parse(widget.jobModel.createdAt)),
+                                DateFormat('MMM, d yyyy').format(
+                                    DateTime.parse(widget.jobModel.dueDate)),
+                                // timeago.format(
+                                //     DateTime.parse(widget.jobModel.createdAt)),
                               ),
                             ],
                           ),
@@ -144,7 +138,7 @@ class _HomeDetailState extends State<HomeDetail> {
                                 width: 7,
                               ),
                               Text(
-                                formatCurrency.format(widget.jobModel.price),
+                                formatRupiah.format(widget.jobModel.price),
                               ),
                             ],
                           )
@@ -184,15 +178,16 @@ class _HomeDetailState extends State<HomeDetail> {
                   const Expanded(
                     child: SizedBox(),
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      RoundedButton(
-                        title: 'Apply',
-                        onTap: () {},
-                      )
-                    ],
-                  ),
+                  if (!checkStatus())
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        RoundedButton(
+                          title: 'Apply',
+                          onTap: () {},
+                        )
+                      ],
+                    ),
                 ],
               ),
             ),

@@ -2,8 +2,6 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:freelance/controller/category_controller.dart';
 import 'package:freelance/controller/job_controller.dart';
-import 'package:freelance/model/api_respons.dart';
-import 'package:freelance/model/job_model.dart';
 import 'package:freelance/pages/home/widgets/home_bycategories.dart';
 import 'package:freelance/pages/home/widgets/home_categories_item.dart';
 import 'package:freelance/pages/home/widgets/home_jobs_item.dart';
@@ -29,9 +27,11 @@ class _HomePageState extends State<HomePage> {
   }
 
   void getAllJobs() async {
-    ApiRespons result = await _jobController.getJobslist();
-    ApiRespons result2 = await _categoryController.getCategorylist();
-    setState(() {});
+    await _jobController.getJobslist();
+    await _categoryController.getCategorylist();
+    if (mounted) {
+      setState(() {});
+    }
   }
 
   @override

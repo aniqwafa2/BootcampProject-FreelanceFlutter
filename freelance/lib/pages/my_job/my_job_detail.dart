@@ -1,13 +1,42 @@
 import 'package:flutter/material.dart';
+import 'package:freelance/controller/job_controller.dart';
 import 'package:freelance/layouts/header_detail.dart';
 import 'package:freelance/model_widget/rounded_button.dart';
 import 'package:freelance/model_widget/rounded_detailcard.dart';
+import 'package:freelance/model_widget/row_status.dart';
 import 'package:freelance/utils/app_styles.dart';
+import 'package:intl/intl.dart';
 
-const bool jobAccept = true;
+class MyJobDetail extends StatefulWidget {
+  final dynamic jobData;
+  final bool status;
 
-class MyJobDetail extends StatelessWidget {
-  const MyJobDetail({super.key});
+  const MyJobDetail({
+    super.key,
+    required this.jobData,
+    required this.status,
+  });
+
+  @override
+  State<MyJobDetail> createState() => _MyJobDetailState();
+}
+
+class _MyJobDetailState extends State<MyJobDetail> {
+  final JobController _jobAplicantController = JobController();
+
+  @override
+  void initState() {
+    super.initState();
+    getJobApplicantCount(widget.jobData.id);
+  }
+
+  void getJobApplicantCount(int jobId) async {
+    await _jobAplicantController.getJobsAplicant(jobId);
+
+    if (mounted) {
+      setState(() {});
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -50,68 +79,71 @@ class MyJobDetail extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "Job title",
+                              widget.jobData.name,
                               style: Styles.headLineStyle3,
                               overflow: TextOverflow.ellipsis,
                             ),
-                            const Text('Category'),
+                            Text(widget.jobData.category.name),
                             const SizedBox(
                               height: 10,
                             ),
-                            Row(
-                              children: [
-                                Icon(
-                                  Icons.fiber_manual_record,
-                                  size: 16,
-                                  color: Styles.primaryColor,
-                                ),
-                                const Text("Status")
-                              ],
-                            ),
+                            if (widget.status && widget.jobData.status)
+                              Status(
+                                color: Colors.lightGreen.shade800,
+                                status: 'Accepted',
+                              )
+                            else
+                              Status(
+                                color: Styles.primaryColor,
+                                status: 'Applied',
+                              )
                           ],
                         ),
                       ),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Icon(
-                                Icons.person_search_outlined,
-                                size: 20,
-                                color: Styles.primaryColor,
-                              ),
-                              const SizedBox(
-                                width: 7,
-                              ),
-                              const Text(
-                                'N applicant',
-                              ),
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 7,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Icon(
-                                Icons.date_range_outlined,
-                                size: 20,
-                                color: Styles.primaryColor,
-                              ),
-                              const SizedBox(
-                                width: 7,
-                              ),
-                              const Text(
-                                'May, 5 2023',
-                              ),
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 7,
-                          ),
+                          if (widget.status == false ||
+                              widget.jobData.status == false) ...[
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Icon(
+                                  Icons.person_search_outlined,
+                                  size: 20,
+                                  color: Styles.primaryColor,
+                                ),
+                                const SizedBox(
+                                  width: 7,
+                                ),
+                                Text(
+                                  '${_jobAplicantController.useritems.length} Applicant',
+                                ),
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 7,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Icon(
+                                  Icons.date_range_outlined,
+                                  size: 20,
+                                  color: Styles.primaryColor,
+                                ),
+                                const SizedBox(
+                                  width: 7,
+                                ),
+                                Text(DateFormat('MMM, d yyyy')
+                                    .format(widget.jobData.dueDate)),
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 7,
+                            )
+                          ],
                           Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
@@ -123,8 +155,8 @@ class MyJobDetail extends StatelessWidget {
                               const SizedBox(
                                 width: 7,
                               ),
-                              const Text(
-                                'Rp. 5.000.000',
+                              Text(
+                                formatRupiah.format(widget.jobData.price),
                               ),
                             ],
                           )
@@ -142,10 +174,10 @@ class MyJobDetail extends StatelessWidget {
                   const SizedBox(
                     height: 10,
                   ),
-                  const Expanded(
+                  Expanded(
                     child: SingleChildScrollView(
                       child: Text(
-                        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+                        widget.jobData.description,
                         textAlign: TextAlign.justify,
                       ),
                     ),
@@ -160,12 +192,11 @@ class MyJobDetail extends StatelessWidget {
                   const SizedBox(
                     height: 10,
                   ),
-                  const Text('ERD.pdf'),
+                  Text(widget.jobData.file),
                   const Expanded(
                     child: SizedBox(),
                   ),
-                  // TODO: jika job accepted tambah row dibawah
-                  if (jobAccept)
+                  if (widget.jobData.status && widget.status)
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
