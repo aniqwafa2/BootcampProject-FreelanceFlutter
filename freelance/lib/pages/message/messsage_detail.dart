@@ -1,14 +1,40 @@
 import 'package:flutter/material.dart';
 import 'package:freelance/layouts/header_detail.dart';
+import 'package:freelance/model/detailchat_model.dart';
 import 'package:freelance/model_widget/rounded_card.dart';
 import 'package:freelance/utils/app_styles.dart';
 
-class MessageDetail extends StatelessWidget {
-  const MessageDetail({super.key});
+import '../../controller/chat_controller.dart';
+import '../../model/chatlist_model.dart';
+
+class MessageDetail extends StatefulWidget {
+  const MessageDetail({super.key, required int? id});
+
+  @override
+  State<MessageDetail> createState() => _MessageDetailState();
+}
+
+class _MessageDetailState extends State<MessageDetail> {
+  final ChatController _chatController = ChatController();
+  Welcome? result;
+
+  @override
+  void initState() {
+    getDetailMyChat();
+
+    super.initState();
+  }
+
+  void getDetailMyChat() async {
+    result = await _chatController.getDetailData();
+    debugPrint("${result?.data[0]}");
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: primary2,
       body: SafeArea(
           child: Container(
         padding: const EdgeInsets.all(20),

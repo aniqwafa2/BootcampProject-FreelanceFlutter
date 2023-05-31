@@ -54,10 +54,11 @@ class MessagePage extends StatelessWidget {
               children: [
                 RoundedCard(
                   onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const MessageDetail()));
+                    // TODO: messagedetail butuh contact id
+                    // Navigator.push(
+                    //     context,
+                    //     MaterialPageRoute(
+                    //         builder: (context) => const MessageDetail()));
                   },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,

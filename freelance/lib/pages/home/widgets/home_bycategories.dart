@@ -35,6 +35,7 @@ class _HomeByCategoriesState extends State<HomeByCategories> {
 
   @override
   Widget build(BuildContext context) {
+    TextEditingController _searchController = TextEditingController();
     return Scaffold(
       backgroundColor: primary2,
       body: Container(
@@ -87,7 +88,7 @@ class _HomeByCategoriesState extends State<HomeByCategories> {
                     ),
                     Expanded(
                       child: TextFormField(
-                        //controller: search,
+                        controller: _searchController,
                         keyboardType: TextInputType.text,
                         cursorColor: Colors.blue,
                         decoration: const InputDecoration.collapsed(
@@ -96,8 +97,14 @@ class _HomeByCategoriesState extends State<HomeByCategories> {
                       ),
                     ),
                     TextButton(
-                      onPressed: () => {},
-                      child: Text("Search"),
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => HomeByCategories(
+                                    categoryname: _searchController.text)));
+                      },
+                      child: const Text("Search"),
                     )
                   ],
                 )),

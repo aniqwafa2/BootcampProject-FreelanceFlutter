@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:freelance/model/applicantcek_model.dart';
 import 'package:freelance/model_widget/rounded_card.dart';
 import 'package:freelance/controller/job_controller.dart';
 import 'package:freelance/model/job_model.dart';
 import 'package:freelance/model_widget/row_status.dart';
 import 'package:intl/intl.dart';
 import '../../../utils/app_styles.dart';
+import '../../../utils/user_token.dart';
 import '../home_detail.dart';
 
 class HomeJobItem extends StatefulWidget {
@@ -17,6 +19,9 @@ class HomeJobItem extends StatefulWidget {
 
 class _HomeJobItemState extends State<HomeJobItem> {
   final JobController _jobAplicantController = JobController();
+  final formatCurrency = NumberFormat.simpleCurrency(locale: 'id_ID');
+  final UserToken _userToken = UserToken();
+  bool aplied = false;
 
   @override
   void initState() {
@@ -25,10 +30,23 @@ class _HomeJobItemState extends State<HomeJobItem> {
   }
 
   void getJobAplicant(int jobId) async {
+    final getId = await _userToken.getUserId();
     await _jobAplicantController.getJobsAplicant(jobId);
     if (mounted) {
-      setState(() {});
+      ApplicantcekModel cek = _jobAplicantController.useritems.firstWhere(
+        (it) => it.userId == getId,
+        orElse: () => ApplicantcekModel(userId: 0, jobId: 0));
+
+    if (cek.userId == getId) {
+      aplied = true;
     }
+    //if  list.contains(x);
+    if (mounted) {
+      setState(() {
+        // Your state change code goes here
+      });
+      }
+  }
   }
 
   bool checkStatus() {
@@ -48,6 +66,7 @@ class _HomeJobItemState extends State<HomeJobItem> {
                 builder: (context) => HomeDetail(
                       jobModel: widget.jobModel,
                       applicant: _jobAplicantController.useritems.length,
+                      aplied: aplied,
                     )));
       },
       child: Row(

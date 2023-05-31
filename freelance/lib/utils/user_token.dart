@@ -33,4 +33,14 @@ class UserToken {
 
     return tokenAuth;
   }
+
+  Future<String> tokenOnly() async {
+    final prefs = await SharedPreferences.getInstance();
+
+    String? token = prefs.getString('token');
+
+    String tokenAuth = '$token';
+
+    return tokenAuth;
+  }
 }

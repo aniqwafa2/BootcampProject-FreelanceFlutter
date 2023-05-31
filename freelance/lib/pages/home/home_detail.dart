@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:freelance/controller/job_controller.dart';
+import 'package:freelance/model/api_respons.dart';
 import 'package:freelance/model/job_model.dart';
 import 'package:freelance/layouts/header_detail.dart';
 import 'package:freelance/model_widget/rounded_button.dart';
@@ -10,14 +12,20 @@ import 'package:intl/intl.dart';
 class HomeDetail extends StatefulWidget {
   final JobModel jobModel;
   final int applicant;
+  final bool aplied;
   const HomeDetail(
-      {super.key, required this.jobModel, required this.applicant});
+      {super.key,
+      required this.jobModel,
+      required this.applicant,
+      required this.aplied});
 
   @override
   State<HomeDetail> createState() => _HomeDetailState();
 }
 
 class _HomeDetailState extends State<HomeDetail> {
+  final JobController _jobController = JobController();
+
   bool checkStatus() {
     var jobStatus = widget.jobModel.status;
     var dateStatus =
@@ -167,24 +175,26 @@ class _HomeDetailState extends State<HomeDetail> {
                   const SizedBox(
                     height: 30,
                   ),
-                  Text(
-                    'File',
-                    style: Styles.headLineStyle3,
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Text(widget.jobModel.file),
+                  if (widget.jobModel.file.isNotEmpty) ...[
+                    Text(
+                      'File',
+                      style: Styles.headLineStyle3,
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Text(widget.jobModel.file)
+                  ],
                   const Expanded(
                     child: SizedBox(),
                   ),
-                  if (!checkStatus())
+                  if (!widget.aplied || checkStatus())
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         RoundedButton(
                           title: 'Apply',
-                          onTap: () {},
+                          onTap: apply,
                         )
                       ],
                     ),
@@ -201,29 +211,14 @@ class _HomeDetailState extends State<HomeDetail> {
   }
 
   void apply() async {
-    // setState(() {
-    //   _authController.loading = true;
-    // });
+    ApiRespons result = await _jobController.applyJob(widget.jobModel.id);
 
-    //ApiRespons result = await _jobController;
-
-    // setState(() {
-    //   _authController.loading = true;
-    // });
-
-    // if (result.code == 1) {
-    //   setState(() {
-    //     _authController.end = true;
-    //     _authController.pesan = result.message;
-    //   });
-    //   Future.delayed(const Duration(seconds: 1), () {
-    //     Navigator.pop(context);
-    //   });
-    // } else {
-    //   setState(() {
-    //     _authController.end = true;
-    //     _authController.pesan = result.message;
-    //   });
-    // }
+    Future.delayed(const Duration(seconds: 1), () {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(result.message)));
+      Future.delayed(const Duration(seconds: 1), () {
+        Navigator.pop(context);
+      });
+    });
   }
 }
