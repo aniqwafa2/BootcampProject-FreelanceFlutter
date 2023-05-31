@@ -6,6 +6,7 @@ import 'package:freelance/layouts/header_detail.dart';
 import 'package:freelance/model_widget/rounded_button.dart';
 import 'package:freelance/model_widget/rounded_detailcard.dart';
 import 'package:freelance/model_widget/row_status.dart';
+import 'package:freelance/model_widget/text_link.dart';
 import 'package:freelance/utils/app_styles.dart';
 import 'package:intl/intl.dart';
 
@@ -183,7 +184,7 @@ class _HomeDetailState extends State<HomeDetail> {
                     const SizedBox(
                       height: 10,
                     ),
-                    Text(widget.jobModel.file)
+                    LinkFile(filename: widget.jobModel.file)
                   ],
                   const Expanded(
                     child: SizedBox(),
