@@ -4,6 +4,7 @@ import 'package:freelance/layouts/header_detail.dart';
 import 'package:freelance/model_widget/rounded_button.dart';
 import 'package:freelance/model_widget/rounded_detailcard.dart';
 import 'package:freelance/model_widget/row_status.dart';
+import 'package:freelance/model_widget/text_link.dart';
 import 'package:freelance/utils/app_styles.dart';
 import 'package:intl/intl.dart';
 
@@ -185,14 +186,16 @@ class _MyJobDetailState extends State<MyJobDetail> {
                   const SizedBox(
                     height: 30,
                   ),
-                  Text(
-                    'File',
-                    style: Styles.headLineStyle3,
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Text(widget.jobData.file),
+                  if (widget.jobData.file.isNotEmpty) ...[
+                    Text(
+                      'File',
+                      style: Styles.headLineStyle3,
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    LinkFile(filename: widget.jobData.file)
+                  ],
                   const Expanded(
                     child: SizedBox(),
                   ),

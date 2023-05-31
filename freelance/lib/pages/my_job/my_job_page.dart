@@ -12,7 +12,7 @@ class MyJobPage extends StatelessWidget {
       padding: const EdgeInsets.all(20),
       child: Column(
         children: [
-          MainPageHeader(title: 'MyJob ${MediaQuery.of(context).size.width}'),
+          const MainPageHeader(title: 'MyJob'),
           const SizedBox(
             height: 20,
           ),
