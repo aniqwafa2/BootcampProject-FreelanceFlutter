@@ -11,7 +11,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../api/api_myjob.dart';
 import '../model/login_model.dart';
-import '../model/myjob_model.dart';
+// import '../model/myjob_model.dart';
 import '../model/register_model.dart';
 import '../model/applicantcek_model.dart';
 import '../model/user_model.dart';

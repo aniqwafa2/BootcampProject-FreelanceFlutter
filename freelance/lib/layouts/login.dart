@@ -4,7 +4,6 @@ import 'package:freelance/layouts/register.dart';
 import 'package:freelance/model/login_model.dart';
 import 'package:freelance/utils/app_styles.dart';
 import 'package:gap/gap.dart';
-import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../controller/auth_controller.dart';

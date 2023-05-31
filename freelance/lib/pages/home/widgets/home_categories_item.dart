@@ -1,7 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:freelance/model/category_model.dart';
 import 'package:freelance/pages/home/widgets/home_bycategories.dart';
 

@@ -16,8 +16,7 @@ class ApiJob {
 
   Future<http.Response> getAplicant(int jobId) {
     return http.get(
-      Uri.parse(
-          "https://freelance-api.cyclic.app/api/applicants/find/job/$jobId"),
+      Uri.parse("$apiURL/applicants/find/job/$jobId"),
       headers: <String, String>{
         'Content-Type': "application/json; charset=UTF-8"
       },
@@ -25,8 +24,7 @@ class ApiJob {
   }
 
   Future<http.Response> applyJob(int jobId, int userId, String token) {
-    return http.post(
-        Uri.parse("https://freelance-api.cyclic.app/api/applicants/apply"),
+    return http.post(Uri.parse("$apiURL/applicants/apply"),
         headers: <String, String>{
           'Content-Type': "application/json; charset=UTF-8",
           HttpHeaders.authorizationHeader: token
