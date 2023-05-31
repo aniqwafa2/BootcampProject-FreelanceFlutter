@@ -53,22 +53,22 @@ class _HomeDetailState extends State<HomeDetail> {
                 children: [
                   Row(
                     children: [
-                      Expanded(
-                        flex: 2,
-                        child: Container(
-                          height: 50,
-                          width: 50,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(15),
-                          ),
-                          child: const CircleAvatar(
-                              backgroundImage:
-                                  AssetImage('assets/images/profile.jpg')),
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 10,
-                      ),
+                      // Expanded(
+                      //   flex: 2,
+                      //   child: Container(
+                      //     height: 50,
+                      //     width: 50,
+                      //     decoration: BoxDecoration(
+                      //       borderRadius: BorderRadius.circular(15),
+                      //     ),
+                      //     child: const CircleAvatar(
+                      //         backgroundImage:
+                      //             AssetImage('assets/images/profile.jpg')),
+                      //   ),
+                      // ),
+                      // const SizedBox(
+                      //   width: 10,
+                      // ),
                       Expanded(
                         flex: 5,
                         child: Column(

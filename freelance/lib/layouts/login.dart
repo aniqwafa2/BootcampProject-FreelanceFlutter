@@ -80,6 +80,7 @@ class _LoginPageState extends State<LoginPage> {
                     TextFormField(
                       controller: _authController.passwordController,
                       decoration: const InputDecoration(hintText: "Password"),
+                      obscureText: true,
                     ),
                     const SizedBox(
                       height: 40,

@@ -58,16 +58,16 @@ class _MyJobListViewState extends State<MyJobListView> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Expanded(
-                      flex: 1,
-                      child: RoundedImage(
-                        size: 50,
-                        image: AssetImage('assets/images/profile.jpg'),
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 10,
-                    ),
+                    // const Expanded(
+                    //   flex: 1,
+                    //   child: RoundedImage(
+                    //     size: 50,
+                    //     image: AssetImage('assets/images/profile.jpg'),
+                    //   ),
+                    // ),
+                    // const SizedBox(
+                    //   width: 10,
+                    // ),
                     Expanded(
                       flex: 4,
                       child: Column(
